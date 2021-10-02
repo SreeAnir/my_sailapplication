@@ -80,7 +80,7 @@ class QATest extends TestCase
     /**
      * @return void
      */
-    public function testPracticewrong()
+    public function testQuestionListing()
     {
 
         $question = new Question();
@@ -88,33 +88,17 @@ class QATest extends TestCase
         $question->answer = "nine";
         $question->save();
         $q =  Question::first();
-        $this->artisan('qanda:practice')
-            ->expectsQuestion('Enter a Question (QNo) from the list or --x to go back to previous menu', $q->id)
-            ->expectsQuestion($q->question . ' >>> ', 's')
-            ->expectsOutput("Incorrect Answer Recorded!")
+
+
+        $this->artisan('qanda:list')
+            ->expectsOutput('+----+-----------+--------+')
+            ->expectsOutput('| ID | Questions | Answer |')
+            ->expectsOutput('+----+-----------+--------+')
+            ->expectsOutput('+----+-----------+--------+')
             ->assertExitCode(0);
+        $this->assertDatabaseHas('questions', [
+            'answer' => 'nine',
+            'question' => 'Spell 9?',
+        ]);
     }
-    // /**
-    //  * @return void
-    //  */
-    // public function testPracticeWrong()
-    // {
-    //     $question = new Question();
-    //     $question->question = "Spell 9?";
-    //     $question->answer = "nine";
-    //     $question->save();
-    //     $q =  $question->first();
-
-    //     $this->artisan('qanda:practice')
-    //         ->expectsQuestion('Enter a Question (QNo) from the list or --x to go back to previous menu', $q->id)
-    //         ->expectsQuestion($q->question . ' >>> ', "Wrong")
-    //         // ->expectsConfirmation('Choose an Option', self::PRACTICE)
-    //         ->assertExitCode(0);
-
-    //     $this->assertDatabaseHas('answers', [
-    //         'answer_text' => 'Wrong',
-    //         'question_id' => $q->id,
-    //         'status' => 0,
-    //     ]);
-    // }
 }

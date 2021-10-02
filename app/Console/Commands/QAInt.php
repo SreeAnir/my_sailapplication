@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use App\Traits\QATrait;
 
 use App\Models\Question;
+use App\Models\Answer;
 
 class QAInt extends Command
 {
@@ -82,13 +83,18 @@ class QAInt extends Command
                 $this->call('qanda:practice');
                 break;
             case  self::LIST_QUESTIONS:
-                $this->loadQuestions();
+                // $this->loadQuestions();
+                $this->call('qanda:list');
+                $this->handle();
+
                 break;
             case  self::STATS:
                 $this->loadStats();
                 break;
             case  self::RESET:
                 $this->call('qanda:reset');
+                $this->call('qanda:test');
+
                 break;
 
             case  self::EXIT_SESSION:
@@ -127,24 +133,6 @@ class QAInt extends Command
         $this->info(vsprintf("The total amount of questions : %u", [$question_collection]));
         $this->info(vsprintf("%% of questions that have an answer  : %u%s", array(round(($answered / ($question_collection != 0 ? $question_collection : 1)) * 100), '%')));
         $this->info(vsprintf("%% of questions that have a correct answer  : %u%s", [round(($correct / ($answered != 0 ? $answered : 1)) * 100), '%']));
-        $this->loadMenu();
-    }
-    /**
-     * @param  
-     * Lists all the created questions with the correct answer.  
-     * 
-     */
-
-    protected function loadQuestions()
-    {
-        $this->alert("Showing List of Questions Added ");
-        $question_collection = Question::all(['question', 'answer'])->toArray();
-
-        $this->table(
-            ['Questions', 'Answer'],
-            $question_collection
-        );
-
         $this->loadMenu();
     }
 }
