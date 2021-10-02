@@ -84,21 +84,36 @@ class QATest extends TestCase
     {
 
         $question = new Question();
+        $question->id = 1;
         $question->question = "Spell 9?";
         $question->answer = "nine";
         $question->save();
         $q =  Question::first();
 
+        // $this->artisan('qanda:list')
+        //     ->expectsOutput('+----+-----------+--------+')
+        //     ->expectsOutput('| ID | Questions | Answer |')
+        //     ->expectsOutput('+----+-----------+--------+')
+        //     ->expectsOutput('| 4  | Spell 9?  | nine   |')
+        //     ->expectsOutput('+----+-----------+--------+')
+        //     ->assertExitCode(0);
 
         $this->artisan('qanda:list')
-            ->expectsOutput('+----+-----------+--------+')
-            ->expectsOutput('| ID | Questions | Answer |')
-            ->expectsOutput('+----+-----------+--------+')
-            ->expectsOutput('+----+-----------+--------+')
+            ->expectsTable(['ID', 'Questions', 'Answer'], [[1,  $q->question,  $q->answer]])
             ->assertExitCode(0);
+
         $this->assertDatabaseHas('questions', [
-            'answer' => 'nine',
-            'question' => 'Spell 9?',
+            'answer' => $q->answer,
+            'question' => $q->question,
         ]);
+    }
+    /**
+     * @return void
+     */
+    public function testReset()
+    {
+        $this->artisan('qanda:reset')
+            ->expectsConfirmation('Do you want to remove all the questions & Answers ??', 'yes')
+            ->assertExitCode(0);
     }
 }

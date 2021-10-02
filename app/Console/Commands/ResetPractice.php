@@ -43,16 +43,14 @@ class ResetPractice extends Command
     }
     function reset()
     {
-        if ($this->confirm("Do you want to remove all the questions & Answers  ?? ")) {
+        if ($this->confirm("Do you want to remove all the questions & Answers ??")) {
+
             DB::statement('SET FOREIGN_KEY_CHECKS=0;');
             Answer::truncate();
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');
             $this->alert("Process Reset completed");
         } else {
             $this->warn("Reset Cancelled.Back to Main Menu");
-            $this->call('qanda:test');
-
-            ///call interactive command
         }
     }
 }
