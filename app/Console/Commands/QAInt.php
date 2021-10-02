@@ -3,16 +3,16 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Database\QueryException;
+// use Illuminate\Database\QueryException;
 
-use App\Console\Traits\ProgressionBarOutput;
+// use App\Console\Traits\ProgressionBarOutput;
 use App\Traits\QATrait;
 
 use App\Models\Question;
-use App\Models\Answer;
 
-class QAInteractive extends Command
+class QAInt extends Command
 {
+
     // use ProgressionBarOutput;
     protected const NEW_QUESTION = 'Create a question';
     protected const PRACTICE = "Practice";

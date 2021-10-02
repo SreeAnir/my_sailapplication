@@ -13,9 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\QAInteractive::class,
-        Commands\Practice::class,
-        Commands\AddQuestion::class,
+        // Commands\Practice::class,
+        // Commands\AddQuestion::class,
     ];
 
     /**
