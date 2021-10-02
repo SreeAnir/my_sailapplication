@@ -61,7 +61,9 @@ class Practice extends Command
         if ($this->total_question_count == 0) {
             $this->error("Add Questions");
         } else if ($this->total_question_count == $this->right_ans_count) {
+            $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
             $this->error("Reset to Continue the Practice!");
+            $this->call('qanda:test');
         } else {
             $picked_question = $this->ask("Enter a Question (QNo) from the list or --x to go back to previous menu");
             $this->promptQuestion($picked_question);
@@ -99,9 +101,9 @@ class Practice extends Command
                     $this->info("Recorded a Correct Answer !");
                     $this->right_ans_count++;
                     $this->bringQuestions();
-                    if ($this->total_question_count == $this->right_ans_count) {
-                        $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
-                    }
+                    // if ($this->total_question_count == $this->right_ans_count) {
+                    //     $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
+                    // }
                 } else {
                     $this->error("Incorrect Answer Recorded!");
                     $this->bringQuestions();
@@ -138,7 +140,7 @@ class Practice extends Command
      * Lists the Questions ,Answers 
      * Allows user to choose a question and enter answer 
      */
-    protected function practiseScreen()
+    protected function practiseScreen1()
     {
         $answer_picked_question = "";
         if ($this->total_question_count == $this->right_ans_count) {
@@ -182,9 +184,9 @@ class Practice extends Command
                         $this->info("Recorded a Correct Answer !");
                         $this->right_ans_count++;
                         $this->practiseScreen();
-                        if ($this->total_question_count == $this->right_ans_count) {
-                            $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
-                        }
+                        // if ($this->total_question_count == $this->right_ans_count) {
+                        //     $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
+                        // }
                     } else {
                         $this->error("Incorrect Answer Recorded!");
                         // $this->practiseScreen();

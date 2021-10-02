@@ -116,4 +116,27 @@ class QATest extends TestCase
             ->expectsConfirmation('Do you want to remove all the questions & Answers ??', 'yes')
             ->assertExitCode(0);
     }
+    /**
+     * @return void
+     */
+    public function testStats()
+    {
+        $this->artisan('qanda:stats')
+            ->expectsOutput('The total amount of questions : 0')
+            ->expectsOutput('% of questions that have an answer  : 0%')
+            ->expectsOutput('% of questions that have a correct answer  : 0%')
+
+            ->assertExitCode(0);
+    }
+    /**
+     * @return void
+     */
+    public function testExit()
+    {
+        $this->artisan('qanda:test')
+            ->expectsQuestion('Choose an Option', SELF::EXIT_SESSION)
+            ->expectsQuestion('Want to Exit ??', 'yes')
+            ->expectsOutput('**********Quitting******************')
+            ->assertExitCode(0);
+    }
 }

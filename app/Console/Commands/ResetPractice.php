@@ -45,9 +45,10 @@ class ResetPractice extends Command
     {
         if ($this->confirm("Do you want to remove all the questions & Answers ??")) {
 
-            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-            Answer::truncate();
-            DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            // DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+            Answer::whereNotNull('id')->delete();
+            // Answer::truncate();
+            // DB::statement('SET FOREIGN_KEY_CHECKS=1;');
             $this->alert("Process Reset completed");
         } else {
             $this->warn("Reset Cancelled.Back to Main Menu");
