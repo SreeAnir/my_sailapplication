@@ -134,7 +134,7 @@ class QATest extends TestCase
      */
     public function testExit()
     {
-        $this->artisan('qanda:test')
+        $this->artisan('qanda:interactive')
             ->expectsQuestion('Choose an Option', SELF::EXIT_SESSION)
             ->expectsQuestion('Want to Exit ??', 'yes')
             ->expectsOutput('**********Quitting******************')

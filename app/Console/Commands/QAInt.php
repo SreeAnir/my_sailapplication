@@ -35,7 +35,7 @@ class QAInt extends Command
      *
      * @var string
      */
-    protected $signature = 'qanda:test';
+    protected $signature = 'qanda:interactive';
 
     /**
      * The console command description.
@@ -91,12 +91,12 @@ class QAInt extends Command
             case  self::STATS:
                 // $this->loadStats();
                 $this->call('qanda:stats');
-                $this->call('qanda:test');
+                $this->call('qanda:interactive');
 
                 break;
             case  self::RESET:
                 $this->call('qanda:reset');
-                $this->call('qanda:test');
+                $this->call('qanda:interactive');
 
                 break;
 

@@ -63,7 +63,7 @@ class Practice extends Command
         } else if ($this->total_question_count == $this->right_ans_count) {
             $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `qanda:reset` or choosing Exit from Menu !');
             $this->error("Reset to Continue the Practice!");
-            $this->call('qanda:test');
+            $this->call('qanda:interactive');
         } else {
             $picked_question = $this->ask("Enter a Question (QNo) from the list or --x to go back to previous menu");
 
@@ -92,7 +92,7 @@ class Practice extends Command
                     }
                     $answer_picked_question = $this->ask($check_details->question . " >>> ");
                     if ($answer_picked_question  == "--x") {
-                        $this->call('qanda:test');
+                        $this->call('qanda:interactive');
                     }
                     $status = (strcasecmp($answer_picked_question, $check_details->answer) == 0 ? 1 : 0);
 

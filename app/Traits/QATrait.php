@@ -34,7 +34,7 @@ trait QATrait
         if ($this->confirm("Do you want to continue the practice?")) {
             $this->call('qanda:practice');
         } else {
-            $this->call('qanda:test');
+            $this->call('qanda:interactive');
         }
     }
     static function getRightAnswersCount()
@@ -77,6 +77,6 @@ trait QATrait
             }
         }
 
-        $this->call('qanda:test');
+        $this->call('qanda:interactive');
     }
 }
