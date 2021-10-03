@@ -48,7 +48,6 @@ class Practice extends Command
     {
         $this->qandalist();
         $this->bringQuestions();
-        // $this->practiseScreen();
     }
     /**
      * @param  
@@ -70,7 +69,10 @@ class Practice extends Command
             $this->promptQuestion($picked_question);
         }
     }
-
+    /**
+     * @param  $picked_question : 
+     * Allows user to answer the question picked from question list table
+     */
     public function promptQuestion($picked_question)
     {
         if (!is_numeric($picked_question)) {

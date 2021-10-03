@@ -3,13 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-// use Illuminate\Database\QueryException;
 
-// use App\Console\Traits\ProgressionBarOutput;
 use App\Traits\QATrait;
-
-// use App\Models\Question;
-// use App\Models\Answer;
 
 class QAInt extends Command
 {
@@ -57,7 +52,7 @@ class QAInt extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     * @return void
      */
     public function handle()
     {
@@ -76,20 +71,16 @@ class QAInt extends Command
         switch ($option) {
             case  self::NEW_QUESTION:
                 $this->call('qanda:newquestion');
-                // $this->createQuestion();
                 break;
             case  self::PRACTICE:
-                // $this->practiseScreen();
                 $this->call('qanda:practice');
                 break;
             case  self::LIST_QUESTIONS:
-                // $this->loadQuestions();
                 $this->call('qanda:list');
                 $this->handle();
 
                 break;
             case  self::STATS:
-                // $this->loadStats();
                 $this->call('qanda:stats');
                 $this->call('qanda:interactive');
 

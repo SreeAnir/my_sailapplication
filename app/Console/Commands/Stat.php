@@ -20,7 +20,10 @@ class Stat extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Displays the following stats:
+    - The total amount of questions.
+    - % of questions that have an answer.
+    - % of questions that have a correct answer.';
 
     /**
      * Create a new command instance.
@@ -35,7 +38,7 @@ class Stat extends Command
     /**
      * Execute the console command.
      *
-     * @return int
+     *  
      */
     public function handle()
     {

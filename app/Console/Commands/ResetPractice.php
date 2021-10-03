@@ -41,6 +41,11 @@ class ResetPractice extends Command
     {
         $this->reset();
     }
+    /**
+     * @param  
+     * Resets the Practice History
+     *  
+     */
     function reset()
     {
         if ($this->confirm("Do you want to remove all the questions & Answers ??")) {

@@ -8,29 +8,29 @@ Application created for assessment for StuDocu Backend engineer
 
 ## Instructions to Run
 Clone the repository
-gh repo clone SreeAnir/my_sailapplication
-
+`gh repo clone SreeAnir/my_sailapplication
+`
 Switch to the repo folder
-cd my_sailapplication
+`cd my_sailapplication`
 
 Install all the dependencies using composer
-composer install
+`composer install`
 
 
 Run the database migrations (Set the database connection in .env before migrating)
-php artisan migrate
+`php artisan migrate`
 
 
 ## Commands to Run
-Use qanda:interactive command to run the process
+Use `qanda:interactive command to run the process`
 
 ## Tests
 Find the testcases in tests folder.
 
 ## Docker & laravel sail 
 You can user docker commands to run.
-    ./vendor/bin/sail up
-    ./vendor/bin/sail artisan qanda:test 
+    `./vendor/bin/sail up`
+    `./vendor/bin/sail artisan qanda:test`
 
 
   

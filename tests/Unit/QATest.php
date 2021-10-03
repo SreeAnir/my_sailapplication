@@ -68,7 +68,6 @@ class QATest extends TestCase
         $this->artisan('qanda:practice')
             ->expectsQuestion('Enter a Question (QNo) from the list or --x to go back to previous menu', $q->id)
             ->expectsQuestion($q->question . ' >>> ', $q->answer)
-            // ->expectsConfirmation('Choose an Option', self::PRACTICE)
             ->assertExitCode(0);
 
 

@@ -40,7 +40,6 @@ class AddQuestion extends Command
      */
     public function handle()
     {
-        // return 0;
         $this->createQuestion();
     }
 }
