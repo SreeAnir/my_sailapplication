@@ -53,6 +53,7 @@ class QATest extends TestCase
             ->expectsConfirmation('Choose an Option', self::NEW_QUESTION)
             ->assertExitCode(0);
     }
+
     /**
      * @return void
      */

@@ -28,6 +28,15 @@ trait QATrait
         }
         return  $table_data;
     }
+    public function handleInvalidSelection()
+    {
+        $this->error("Picked An Valid Question Number");
+        if ($this->confirm("Do you want to continue the practice?")) {
+            $this->call('qanda:practice');
+        } else {
+            $this->call('qanda:test');
+        }
+    }
     static function getRightAnswersCount()
     {
         return  Answer::select('id')->where('status', 1)->count();

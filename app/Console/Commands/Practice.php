@@ -61,52 +61,55 @@ class Practice extends Command
         if ($this->total_question_count == 0) {
             $this->error("Add Questions");
         } else if ($this->total_question_count == $this->right_ans_count) {
-            $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
+            $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `qanda:reset` or choosing Exit from Menu !');
             $this->error("Reset to Continue the Practice!");
             $this->call('qanda:test');
         } else {
             $picked_question = $this->ask("Enter a Question (QNo) from the list or --x to go back to previous menu");
+
             $this->promptQuestion($picked_question);
         }
     }
 
     public function promptQuestion($picked_question)
     {
-        $check_details = QATrait::checkCurrentAnswer($picked_question);
-        if ($check_details == null) {
-            $this->error("Invalid Selection");
-            $this->bringQuestions();
+        if (!is_numeric($picked_question)) {
+            $this->handleInvalidSelection();
         } else {
-            if (!$check_details) {
-                $this->error("You have selected an invalid question!!!");
+
+            $check_details = QATrait::checkCurrentAnswer($picked_question);
+            if ($check_details == null) {
+                $this->error("Invalid Selection");
                 $this->bringQuestions();
             } else {
-                if (isset($check_details->qa->status) &&   $check_details->qa->status == 1) {
-                    $this->error("You cannot change the correct answer !");
+                if (!$check_details) {
+                    $this->error("You have selected an invalid question!!!");
                     $this->bringQuestions();
-                }
-                $answer_picked_question = $this->ask($check_details->question . " >>> ");
-                if ($answer_picked_question  == "--x") {
-                    $this->call('qanda:test');
-                }
-                $status = (strcasecmp($answer_picked_question, $check_details->answer) == 0 ? 1 : 0);
-
-                $store_answer =   Answer::updateOrCreate(
-                    ['question_id' => $picked_question],
-                    ['answer_text' =>  $answer_picked_question, 'question_id' => $picked_question, 'status' =>   $status],
-
-                );
-
-                if ($status == 1) {
-                    $this->info("Recorded a Correct Answer !");
-                    $this->right_ans_count++;
-                    $this->bringQuestions();
-                    // if ($this->total_question_count == $this->right_ans_count) {
-                    //     $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
-                    // }
                 } else {
-                    $this->error("Incorrect Answer Recorded!");
-                    $this->bringQuestions();
+                    if (isset($check_details->qa->status) &&   $check_details->qa->status == 1) {
+                        $this->error("You cannot change the correct answer !");
+                        $this->bringQuestions();
+                    }
+                    $answer_picked_question = $this->ask($check_details->question . " >>> ");
+                    if ($answer_picked_question  == "--x") {
+                        $this->call('qanda:test');
+                    }
+                    $status = (strcasecmp($answer_picked_question, $check_details->answer) == 0 ? 1 : 0);
+
+                    $store_answer =   Answer::updateOrCreate(
+                        ['question_id' => $picked_question],
+                        ['answer_text' =>  $answer_picked_question, 'question_id' => $picked_question, 'status' =>   $status],
+
+                    );
+
+                    if ($status == 1) {
+                        $this->info("Recorded a Correct Answer !");
+                        $this->right_ans_count++;
+                        $this->bringQuestions();
+                    } else {
+                        $this->error("Incorrect Answer Recorded!");
+                        $this->bringQuestions();
+                    }
                 }
             }
         }
@@ -134,66 +137,5 @@ class Practice extends Command
 
 
         $this->alert("You can start practicing now.Type --x to exit the process");
-    }
-    /**
-     * @param  
-     * Lists the Questions ,Answers 
-     * Allows user to choose a question and enter answer 
-     */
-    protected function practiseScreen1()
-    {
-        $answer_picked_question = "";
-        if ($this->total_question_count == $this->right_ans_count) {
-            $this->error("Reset to Continue the Practice!");
-        }
-        while ($this->total_question_count > $this->right_ans_count) {
-
-            $picked_question = $this->ask("Enter a Question (QNo) from the list or --x to go back to previous menu");
-            if ($picked_question  == "--x") {
-                $this->call('qanda:test');
-                // break;
-            }
-            if (!is_numeric($picked_question)) {
-                $this->error("Please choose a a valid option!");
-                $this->practiseScreen();
-            } else {
-
-                $check_details = QATrait::checkCurrentAnswer($picked_question);
-
-                if (!$check_details) {
-                    $this->error("You have selected an invalid question!!!");
-                    $this->practiseScreen();
-                } else {
-                    if (isset($check_details->qa->status) &&   $check_details->qa->status == 1) {
-                        $this->error("You cannot change the correct answer !");
-                        $this->practiseScreen();
-                    }
-                    $answer_picked_question = $this->ask($check_details->question . " >>> ");
-                    if ($answer_picked_question  == "--x") {
-                        $this->call('qanda:test');
-                    }
-                    $status = (strcasecmp($answer_picked_question, $check_details->answer) == 0 ? 1 : 0);
-
-                    $store_answer =   Answer::updateOrCreate(
-                        ['question_id' => $picked_question],
-                        ['answer_text' =>  $answer_picked_question, 'question_id' => $picked_question, 'status' =>   $status],
-
-                    );
-
-                    if ($status == 1) {
-                        $this->info("Recorded a Correct Answer !");
-                        $this->right_ans_count++;
-                        $this->practiseScreen();
-                        // if ($this->total_question_count == $this->right_ans_count) {
-                        //     $this->alert('You have successfully Completed the Practise.Reset and start practicing again with `php artisan qanda:reset` !');
-                        // }
-                    } else {
-                        $this->error("Incorrect Answer Recorded!");
-                        // $this->practiseScreen();
-                    }
-                }
-            }
-        }
-        $this->call('qanda:test');
     }
 }

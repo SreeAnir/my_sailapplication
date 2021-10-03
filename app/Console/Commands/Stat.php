@@ -54,8 +54,12 @@ class Stat extends Command
         $question_collection = Question::count();
         $answered = Answer::count();
         $correct = Answer::where('status', 1)->count();
+        $per_with_answer =  ($question_collection != null ?  round($answered / $question_collection)  * 100 : 0);
+
+        $per_with_correct_answer = ($answered != null ?  round($correct / $answered)  * 100 : 0);
         $this->info(vsprintf("The total amount of questions : %u", [$question_collection]));
-        $this->info(vsprintf("%% of questions that have an answer  : %u%s", array(round(($answered / ($question_collection != 0 ? $question_collection : 1)) * 100), '%')));
-        $this->info(vsprintf("%% of questions that have a correct answer  : %u%s", [round(($correct / ($answered != 0 ? $answered : 1)) * 100), '%']));
+
+        $this->info(vsprintf("%% of questions that have an answer  : %u%s", array($per_with_answer, '%')));
+        $this->info(vsprintf("%% of questions that have a correct answer  : %u%s", [$per_with_correct_answer, '%']));
     }
 }
